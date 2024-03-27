@@ -1,19 +1,5 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>landing</title>
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-</head>
-<body>
-    <h1>Welcome to {{name}}</h1>
-</body>
-<footer style="background-color: black;">
-    <hr>
-    <p>Powered by Django</p>
-    <p style="color: white; text-align: center;" > AutoMax -Best Place to Buy and Sell Cars</p>
-</footer>
-</html>
+{% extends 'base/base.html' %}
+{% block title %}Main {% endblock %}
+{% block 'body' %}
+<h1>Welcome to {{name}}</h1>
+{% endblock %}
