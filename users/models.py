@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from .utils import user_directory_path
 # Create your models here.
     
 class Location(models.Model):
@@ -16,7 +16,7 @@ class Location(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.ImageField(null=True, blank=True)     
+    photo = models.ImageField(upload_to=user_directory_path, null=True, blank=True)     
     bio = models.CharField(max_length=150, null=True, blank=True)
     phone_number =models.CharField(max_length=12, null=True, blank=True)
     location=models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
