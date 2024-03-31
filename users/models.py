@@ -8,3 +8,6 @@ class Profile(models.Model):
     photo = models.ImageField(null=True, blank=True)     
     bio = models.CharField(max_length=150, null=True, blank=True)
     phone_number =models.CharField(max_length=12, null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.user.username}\'s Profile"
