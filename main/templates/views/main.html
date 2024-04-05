@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}Main {% endblock %}
-{% block 'body' %}
+{% block body %}
 <div class="d-flex h-100 text-center text-white index">
     <video autoplay muted loop id="myVideo">
         <source src="{% static 'videos/bg.mp4' %}" type="video/mp4">
@@ -15,7 +15,7 @@
                     {% if request.user.is_authenticated %}
                     <a class="nav-link active" aria-current="page" href="">Home</a>
                     {% else %}
-                    <a class="nav-link" href="">Login</a>
+                    <a class="nav-link" href="{% url 'login_view' %}">Login</a>
                     {% endif %}
                 </nav>
             </div>
