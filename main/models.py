@@ -1,4 +1,6 @@
-from users.models import Profile
+from .utils import user_listing_path
+from .consts import CARS_BRANDS,TRANSMISSION_OPTIONS
+from users.models import Profile,Location
 import uuid
 from django.db import models
 
@@ -10,4 +12,13 @@ class Listing(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     seller=models.ForeignKey(Profile, on_delete=models.CASCADE)
-    
+    brand = models.CharField(max_length=24, choices=CARS_BRANDS, default=None)
+    model = models.CharField(max_length=64)
+    vin = models.CharField(max_length=17)
+    milage = models.IntegerField(default=0)
+    colour = models.CharField(max_length=24,default='white')
+    description = models.TextField()
+    engine = models.CharField(max_length=24)
+    model = models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
+    location = models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to=user_listing_path)
