@@ -15,14 +15,14 @@ class Listing(models.Model):
     brand = models.CharField(max_length=24, choices=CARS_BRANDS, default=None)
     model = models.CharField(max_length=64)
     vin = models.CharField(max_length=17)
-    milage = models.IntegerField(default=0)
+    mileage = models.IntegerField(default=0)
     colour = models.CharField(max_length=24,default='white')
     description = models.TextField()
     engine = models.CharField(max_length=24)
-    model = models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
+    transmission = models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
     location = models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to=user_listing_path)
     
     
     def __str__(self) -> str:
-        return f"{self.seller.user.username}'s listing"
+        return f"{self.seller.user.username}'s listing -- {self.model}"
