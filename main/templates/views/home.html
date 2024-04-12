@@ -3,6 +3,33 @@
 {% block title %}Automax | Home {% endblock %}
 {% block body %}
 <main>
-    <h1>{{ request.user.username }}</h1>
+    <section class="py-5 container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">AutoMax</h1>
+                <p class="lead text-muted">The best place to buy or sell modern enthusiast cars, and we’ve
+                    made it that much easier.</p>
+                <a href="" class="btn btn-primary my-2">List Your Car</a>
+            </div>
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <form method="get">
+                    
+                    <button class="btn btn-sm btn-danger" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for list in listing %}
+                <div class="col">
+                    <p>{{list.id}}</p>
+                    <img style="width: 400px; height: 200px;" src="{{MEDIA_URL}}{{list.image.url}}" alt="">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </main>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import Listing
 
 # Create your views here.
 
@@ -8,5 +9,5 @@ def main_view(request):
 
 @login_required
 def home_view(request):
-    print(request.user.username)
-    return render(request, 'views/home.html')
+    listing = Listing.objects.all()
+    return render(request, 'views/home.html', {'listing' :listing})
