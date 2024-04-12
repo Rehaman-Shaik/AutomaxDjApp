@@ -22,3 +22,7 @@ class Listing(models.Model):
     model = models.CharField(max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
     location = models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to=user_listing_path)
+    
+    
+    def __str__(self) -> str:
+        return f"{self.seller.user.username}'s listing"
