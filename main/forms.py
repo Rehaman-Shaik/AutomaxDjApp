@@ -3,7 +3,6 @@ from .models import Listing
 from users.models import Location
 
 class ListingForm(forms.ModelForm):
-    image = forms.ImageField(required=False)
     
     class Meta:
         model = Listing
