@@ -13,7 +13,7 @@
             </div>
             <div class="col-lg-6 col-md-8 mx-auto">
                 <form method="get">
-                    
+
                     <button class="btn btn-sm btn-danger" type="submit">Submit</button>
                 </form>
             </div>
@@ -22,10 +22,9 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for list in listing %}
+                {% for listing in listings %}
                 <div class="col">
-                    <p>{{list.id}}</p>
-                    <img style="width: 400px; height: 200px;" src="{{MEDIA_URL}}{{list.image.url}}" alt="">
+                    {% include 'components/listing_card.html' %}
                 </div>
                 {% endfor %}
             </div>

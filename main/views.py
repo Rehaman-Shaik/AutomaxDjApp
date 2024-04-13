@@ -9,5 +9,5 @@ def main_view(request):
 
 @login_required
 def home_view(request):
-    listing = Listing.objects.all()
-    return render(request, 'views/home.html', {'listing' :listing})
+    listings = Listing.objects.all()
+    return render(request, 'views/home.html', {'listings' :listings})
