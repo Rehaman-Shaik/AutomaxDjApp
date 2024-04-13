@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Listing
+from .forms import ListingForm,LocationForm
 
 # Create your views here.
 
@@ -18,5 +19,6 @@ def list_view(request):
     if request.method == 'POST':
         pass
     elif request.method == 'GET':
-        pass
-    return render(request,'views/list.html')
+        listing_form = ListingForm()
+        location_form = LocationForm
+    return render(request,'views/list.html',{'listing_form':listing_form,'location_form':location_form})
