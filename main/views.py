@@ -11,3 +11,12 @@ def main_view(request):
 def home_view(request):
     listings = Listing.objects.all()
     return render(request, 'views/home.html', {'listings' :listings})
+
+
+@login_required
+def list_view(request):
+    if request.method == 'POST':
+        pass
+    elif request.method == 'GET':
+        pass
+    return render(request,'views/list.html')
