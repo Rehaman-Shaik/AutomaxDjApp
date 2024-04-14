@@ -1,3 +1,4 @@
+from .filters import ListingFilter
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,11 @@ def main_view(request):
 @login_required
 def home_view(request):
     listings = Listing.objects.all()
-    return render(request, 'views/home.html', {'listings' :listings})
+    listing_filter = ListingFilter(request.GET, queryset=listings)
+    context = {
+        'listing_filter':listing_filter
+    }
+    return render(request, 'views/home.html', context)
 
 
 @login_required
