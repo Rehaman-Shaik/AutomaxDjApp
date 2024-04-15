@@ -1,3 +1,4 @@
+from .forms import UserForm,ProfieForm,LocationForm
 from users.models import Profile
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
@@ -65,12 +66,26 @@ class RegisterView(View):
 
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
-    def get(self, request,id):
-        try:
-            user = User.objects.get(id=id)
-            profile = Profile.objects.get(user=user)
-            context = {'user': profile.bio}
-        except User.DoesNotExist:
-            print(f"User with id {id} does not exist")
-            context = {'user': 'Not found'}
+    def get(self, request):
+        context={}
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfieForm(instance=request.user.profile)
+        location_form = LocationForm(instance=request.user.profile.location)
+        context['profile_form']=profile_form
+        context['location_form']=location_form
+        context['user_form']=user_form
         return render(request, 'views/profile.html', context)
+    
+    
+    """def post(self,request,id):
+        try:
+            profile_form = ProfieForm(request.POST, request.FILES)
+            location_form = LocationForm(request.POST,)
+            user_form = UserForm(request.POST)
+            if profile_form.is_valid() and location_form.is_valid() and user_form.is_valid():
+                profile = profile_form.save()
+                location = location_form.save()
+                user = user_form.save()
+        except Exception as e:
+            print(e)
+            messages.error(request, 'An error occured while posting the listing.')"""
