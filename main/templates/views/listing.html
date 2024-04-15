@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}AutoMax |
-    {{ listing.model }} Listing
+    {{ listing.brand }} Listing
 {% endblock %}
 {% block body %}
 <main>
@@ -39,7 +39,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="text-start">Color</th>
-                                    <td> {{listing.color }}</td>
+                                    <td> {{listing.colour }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="text-start">Engine</th>
@@ -47,7 +47,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="text-start">Transmisson</th>
-                                    <td> {{listing.transmisson|capfirst }}</td>
+                                    <td> {{listing.transmission|capfirst }}</td>
                                 </tr>
                             </tbody>
                         </table>

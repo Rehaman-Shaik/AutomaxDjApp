@@ -1,3 +1,6 @@
+from users.models import Profile
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -58,3 +61,16 @@ class RegisterView(View):
         else:
             return render(request, 'views/register.html', {"register_form" :register_form})
             #messages.error
+            
+
+@method_decorator(login_required, name='dispatch')
+class ProfileView(View):
+    def get(self, request,id):
+        try:
+            user = User.objects.get(id=id)
+            profile = Profile.objects.get(user=user)
+            context = {'user': profile.bio}
+        except User.DoesNotExist:
+            print(f"User with id {id} does not exist")
+            context = {'user': 'Not found'}
+        return render(request, 'views/profile.html', context)
