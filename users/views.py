@@ -67,25 +67,21 @@ class RegisterView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request):
-        context={}
         user_form = UserForm(instance=request.user)
         profile_form = ProfieForm(instance=request.user.profile)
         location_form = LocationForm(instance=request.user.profile.location)
-        context['profile_form']=profile_form
-        context['location_form']=location_form
-        context['user_form']=user_form
-        return render(request, 'views/profile.html', context)
+        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form})
     
     
-    """def post(self,request,id):
-        try:
-            profile_form = ProfieForm(request.POST, request.FILES)
-            location_form = LocationForm(request.POST,)
-            user_form = UserForm(request.POST)
-            if profile_form.is_valid() and location_form.is_valid() and user_form.is_valid():
-                profile = profile_form.save()
-                location = location_form.save()
-                user = user_form.save()
-        except Exception as e:
-            print(e)
-            messages.error(request, 'An error occured while posting the listing.')"""
+    def post(self,request):
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfieForm(request.POST, request.FILES, instance=request.user.profile)
+        location_form = LocationForm(request.POST, instance=request.user.profile.location)
+        if user_form.is_valid() and profile_form.is_valid() and location_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            location_form.save()
+            messages.success(request, "Profile updated successfully")
+        else:
+            messages.error(request, "Error occured ")
+        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form})
