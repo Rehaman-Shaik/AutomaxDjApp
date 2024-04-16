@@ -1,4 +1,4 @@
-from .models import Listing
+from .models import Listing,LikedListing
 from django.contrib import admin
 
 # Register your models here.
@@ -6,3 +6,8 @@ from django.contrib import admin
 class ListingAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Listing)
+
+
+class LikedListingAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(LikedListing)

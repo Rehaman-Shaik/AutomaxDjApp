@@ -26,3 +26,12 @@ class Listing(models.Model):
     
     def __str__(self) -> str:
         return f"{self.seller.user.username}'s listing -- {self.model}"
+    
+
+class LikedListing(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    liked_data = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self) -> str:
+        return f"{self.profile.user.username} is liked the {self.listing.model} Listing"
