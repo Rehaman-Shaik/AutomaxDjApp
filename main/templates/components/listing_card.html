@@ -48,3 +48,21 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $("#like_{{listing.id}}").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'like_listing' id=listing.id %}",
+            data: { 'csrfmiddlewaretoken': "{{csrf_token}}" },
+            dataType: "json",
+            success: function (r) {
+                alert(r)
+            },
+            error: function (rs, e) {
+
+            }
+        });
+    })
+</script>
