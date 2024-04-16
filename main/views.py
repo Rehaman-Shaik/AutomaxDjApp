@@ -1,3 +1,4 @@
+from imp import reload
 from .filters import ListingFilter
 from django.contrib import messages
 from django.shortcuts import render,redirect
@@ -57,3 +58,26 @@ def listing_view(request, id):
     except Exception:
         messages.error(request, f'Invalid UID {id} was provided for listing.')
         return redirect('home')
+    
+
+@login_required
+def edit_view(request, id):
+    try:
+        listing = Listing.objects.get(id=id)
+        if listing is None:
+            raise Exception
+        if request.method == 'POST':
+            listing_form = ListingForm(request.POST, request.FILES,instance=listing)
+            location_form = LocationForm(request.POST,instance=listing.location)
+            if listing_form.is_valid() and location_form.is_valid():
+                location_form.save()
+                listing_form.save()
+                messages.success(request, "Listing updated successfully")
+                return redirect('home')
+        else:
+            listing_form = ListingForm(instance=listing)
+            location_form = LocationForm(instance=listing.location)
+    except Exception:
+        messages.error(request, 'Error occured while updating the listing')
+        return reload()
+    return render(request, 'views/edit.html', {'listing_form':listing_form,'location_form':location_form})

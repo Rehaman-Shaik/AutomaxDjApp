@@ -8,6 +8,14 @@ class ListingForm(forms.ModelForm):
         model = Listing
         fields = {'brand', 'model', 'vin', 'mileage', 'colour', 'description', 'engine', 'transmission', 'image'}
 
+
+class ListingGetForm(forms.ModelForm):
+    
+    class Meta:
+        model = Listing
+        fields = {'brand', 'model', 'vin', 'mileage', 'colour', 'description', 'engine', 'transmission', 'image'}
+
+
 class LocationForm(forms.ModelForm):
     
     class Meta:
