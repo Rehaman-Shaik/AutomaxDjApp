@@ -1,5 +1,5 @@
 from .forms import UserForm,ProfieForm,LocationForm
-from main.models import Listing
+from main.models import Listing,LikedListing
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -66,11 +66,13 @@ class RegisterView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request):
+        login_user_profile = request.user.profile
         user_form = UserForm(instance=request.user)
-        profile_form = ProfieForm(instance=request.user.profile)
+        profile_form = ProfieForm(instance=login_user_profile)
         location_form = LocationForm(instance=request.user.profile.location)
-        listings = Listing.objects.filter(seller=request.user.profile)
-        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form, 'listings':listings})
+        listings = Listing.objects.filter(seller=login_user_profile)
+        user_liked_listing = LikedListing.objects.filter(profile=login_user_profile)
+        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form, 'listings':listings, 'user_liked_listings':user_liked_listing})
     
     
     def post(self,request):
@@ -78,6 +80,7 @@ class ProfileView(View):
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfieForm(request.POST, request.FILES, instance=request.user.profile)
         location_form = LocationForm(request.POST, instance=request.user.profile.location)
+        user_liked_listing = LikedListing.objects.filter(profile=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid() and location_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -85,4 +88,4 @@ class ProfileView(View):
             messages.success(request, "Profile updated successfully")
         else:
             messages.error(request, "Error occured ")
-        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form, 'listings':listings})
+        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form, 'listings':listings,'user_liked_listings':user_liked_listing})

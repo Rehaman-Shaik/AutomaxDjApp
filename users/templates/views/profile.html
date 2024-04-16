@@ -62,7 +62,7 @@ AutoMax | {{request.user|capfirst}} Profile
                 {% for liked_listing in user_liked_listings %}
                 <tr>
                     <td>{{ liked_listing.listing.model }}</td>
-                    <td>{{ liked_listing.like_date }}</td>
+                    <td>{{ liked_listing.liked_data }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
