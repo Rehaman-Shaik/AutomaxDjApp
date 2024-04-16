@@ -1,7 +1,6 @@
 from .forms import UserForm,ProfieForm,LocationForm
-from users.models import Profile
+from main.models import Listing
 from django.utils.decorators import method_decorator
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -70,10 +69,12 @@ class ProfileView(View):
         user_form = UserForm(instance=request.user)
         profile_form = ProfieForm(instance=request.user.profile)
         location_form = LocationForm(instance=request.user.profile.location)
-        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form})
+        listings = Listing.objects.filter(seller=request.user.profile)
+        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form, 'listings':listings})
     
     
     def post(self,request):
+        listings = Listing.objects.filter(seller=request.user.profile)
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfieForm(request.POST, request.FILES, instance=request.user.profile)
         location_form = LocationForm(request.POST, instance=request.user.profile.location)
@@ -84,4 +85,4 @@ class ProfileView(View):
             messages.success(request, "Profile updated successfully")
         else:
             messages.error(request, "Error occured ")
-        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form})
+        return render(request, 'views/profile.html', {'user_form':user_form, 'profile_form':profile_form, 'location_form':location_form, 'listings':listings})
