@@ -55,13 +55,13 @@
         $.ajax({
             type: "POST",
             url: "{% url 'like_listing' id=listing.id %}",
-            data: { 'csrfmiddlewaretoken': "{{csrf_token}}" },
+            data: { 'csrfmiddlewaretoken': '{{csrf_token}}' },
             dataType: "json",
             success: function (r) {
-                alert(r)
+                $("#like_{{listing.id}}").find("svg").attr("fill", r.is_liked_by_user ? "red" : "black");
             },
             error: function (rs, e) {
-
+                alert(e);
             }
         });
     })
